@@ -15,3 +15,8 @@ class DatabaseSeeder extends Seeder {
 	}
 
 }
+
+class UserTableSeeder extends Seeder
+{
+
+}

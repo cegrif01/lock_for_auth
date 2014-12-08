@@ -12,7 +12,12 @@ class CreateListsTable extends Migration {
 	 */
 	public function up()
 	{
-		//
+        Schema::create('lists', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('user_id')->unsigned()->index();
+            $table->string('body');
+            $table->timestamps();
+        });
 	}
 
 	/**
@@ -22,7 +27,7 @@ class CreateListsTable extends Migration {
 	 */
 	public function down()
 	{
-		//
+		Schema::drop('lists');
 	}
 
 }

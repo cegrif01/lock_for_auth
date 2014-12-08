@@ -51,6 +51,11 @@ Route::filter('auth.basic', function()
 	return Auth::basic();
 });
 
+Route::filter('lock.can', function()
+{
+    return true;
+});
+
 /*
 |--------------------------------------------------------------------------
 | Guest Filter
