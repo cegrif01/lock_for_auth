@@ -2,7 +2,8 @@
 
 use BeatSwitch\Lock\Callers\Caller;
 
-class Task extends Eloquent implements Caller {
+class Task extends Eloquent implements Caller
+{
 
     /**
      * The database table used by the model.

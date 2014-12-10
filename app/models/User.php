@@ -6,7 +6,8 @@ use BeatSwitch\Lock\Callers\Caller;
 use Illuminate\Auth\Reminders\RemindableTrait;
 use Illuminate\Auth\Reminders\RemindableInterface;
 
-class User extends Eloquent implements UserInterface, RemindableInterface, Caller {
+class User extends Eloquent implements UserInterface, RemindableInterface, Caller
+{
 
 	use UserTrait, RemindableTrait;
 
