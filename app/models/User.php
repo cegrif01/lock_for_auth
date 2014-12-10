@@ -2,7 +2,7 @@
 
 use Illuminate\Auth\UserTrait;
 use Illuminate\Auth\UserInterface;
-use BeatSwitch\Lock\Contracts\Caller;
+use BeatSwitch\Lock\Callers\Caller;
 use Illuminate\Auth\Reminders\RemindableTrait;
 use Illuminate\Auth\Reminders\RemindableInterface;
 

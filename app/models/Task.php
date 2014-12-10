@@ -1,6 +1,6 @@
 <?php
 
-use BeatSwitch\Lock\Contracts\Caller;
+use BeatSwitch\Lock\Callers\Caller;
 
 class Task extends Eloquent implements Caller {
 
