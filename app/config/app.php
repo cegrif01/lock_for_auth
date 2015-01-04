@@ -121,6 +121,7 @@ return array(
 		'Illuminate\Validation\ValidationServiceProvider',
 		'Illuminate\View\ViewServiceProvider',
 		'Illuminate\Workbench\WorkbenchServiceProvider',
+        'BeatSwitch\Lock\Integrations\Laravel\LockServiceProvider',
 
 	),
 
@@ -188,6 +189,8 @@ return array(
 		'URL'               => 'Illuminate\Support\Facades\URL',
 		'Validator'         => 'Illuminate\Support\Facades\Validator',
 		'View'              => 'Illuminate\Support\Facades\View',
+        'Lock'              => 'BeatSwitch\Lock\Integrations\Laravel\Facades\Lock',
+        'LockManager'       => 'BeatSwitch\Lock\Integrations\Laravel\Facades\LockManager',
 
 	),
 

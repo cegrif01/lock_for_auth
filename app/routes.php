@@ -2,14 +2,19 @@
 
 Route::get('/', function()
 {
-	return View::make('hello');
+	return Redirect::to('/users');
 });
 
 //Route::group(['before' => 'lock.can'], function () {
 
-    Route::get('/users', function() {
+Route::get('/users', function() {
 
-        return pp(User::all());
-    });
+    return pp(User::all());
+});
+
+Route::get('/tasks', function() {
+
+    return pp(Task::all());
+});
 
 //});
