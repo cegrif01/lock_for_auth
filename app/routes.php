@@ -21,10 +21,8 @@ Route::get('/users', function() {
 
     $user = Auth::user();
 
-    LockManager::caller($user)->allow('create', 'tasks');
+    pp(Lock::can('read', 'tasks', $user->getCallerId()));
 
-    //pp(Auth::user()->can('create', 'tasks'));
-    pp(Lock::can('create', 'tasks'));
     return pp(User::all());
 });
 
