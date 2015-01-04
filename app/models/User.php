@@ -1,5 +1,6 @@
 <?php
 
+use BeatSwitch\Lock\LockAware;
 use Illuminate\Auth\UserTrait;
 use Illuminate\Auth\UserInterface;
 use BeatSwitch\Lock\Callers\Caller;
@@ -8,8 +9,7 @@ use Illuminate\Auth\Reminders\RemindableInterface;
 
 class User extends Eloquent implements UserInterface, RemindableInterface, Caller
 {
-
-	use UserTrait, RemindableTrait;
+    use UserTrait, RemindableTrait, LockAware;
 
 	/**
 	 * The database table used by the model.
