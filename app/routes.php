@@ -19,7 +19,11 @@ Route::get('logout','SessionsController@destroy');
 
 Route::get('/users', function() {
 
-    pp(Auth::user());
+    $user = Auth::user();
+
+    LockManager::caller($user)->allow('create', 'tasks');
+
+    //pp(Auth::user()->can('create', 'tasks'));
     pp(Lock::can('create', 'tasks'));
     return pp(User::all());
 });

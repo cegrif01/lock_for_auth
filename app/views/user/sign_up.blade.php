@@ -2,18 +2,18 @@
 {{ Form::open(['route'=>'sign-up']) }}
 
     <p>
-        {{ Form::label('user[email]','Email') }}
-        {{ Form::text('user[email]') }}
+        {{ Form::label('email','Email') }}
+        {{ Form::text('email') }}
     </p>
 
     <p>
-        {{ Form::label('user[password]','Password') }}
-        {{ Form::password('user[password]') }}
+        {{ Form::label('password','Password') }}
+        {{ Form::password('password') }}
     </p>
 
     <p>
-        {{ Form::label('user[password_confirmation]','Password Confirmation') }}
-        {{ Form::password('user[password_confirmation]') }}
+        {{ Form::label('password_confirmation','Password Confirmation') }}
+        {{ Form::password('password_confirmation') }}
     </p>
 
     <p class="actions">

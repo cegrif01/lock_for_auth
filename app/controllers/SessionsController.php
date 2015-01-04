@@ -26,7 +26,7 @@ class SessionsController extends Controller
                 throw new Exception('yo dawg, you got incorrect credentials');
             }
 
-            return Redirect::back()->with('successMessage', 'Successfully Signed in');
+            return Redirect::to('users');
 
         } catch(Exception $e) {
 

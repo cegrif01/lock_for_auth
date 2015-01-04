@@ -69,7 +69,7 @@ return [
              $manager->role('guest')->allow('read', 'tasks');
 
              //Allow a user to create tasks
-             $manager->role('user')->allow('create', 'tasks');
+             $manager->role('user')->deny('create', 'tasks');
 
              // Allow an editor to publish tasks.
              $manager->role('editor')->allow('publish', 'tasks');
