@@ -51,9 +51,9 @@ Route::filter('auth.basic', function()
 	return Auth::basic();
 });
 
-Route::filter('lock.can', function()
+Route::filter('apply_lock', function()
 {
-    return true;
+    with(new \LockDemo\AuthManager(App::make('lock.manager'), App::make('lock')))->setPermissions();
 });
 
 /*

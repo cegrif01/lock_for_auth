@@ -15,19 +15,21 @@ Route::post('auth', ['as' => 'auth', 'uses' => 'SessionsController@loginPost']);
 
 Route::get('logout','SessionsController@destroy');
 
-//Route::group(['before' => 'lock.can'], function () {
+Route::group(['before' => 'apply_lock'], function () {
 
-Route::get('/users', function() {
+    Route::get('/users', function() {
 
-    with(new \LockDemo\TaskAuthManager(App::make('lock.manager'), App::make('lock')))->setPermissions();
+        return User::all();
+    });
 
-    pp(Auth::user()->can('read', 'tasks', 4));
+    Route::get('/tasks/{task_id}', function($task_id) {
+
+        if( ! Auth::user()->can('read', 'tasks', (int)$task_id)) {
+
+            throw new Exception('You do not have permission to view this');
+        }
+
+        return Task::find($task_id);
+    });
+
 });
-
-Route::get('/tasks', function() {
-
-    pp(Task::all());
-
-});
-
-//});
