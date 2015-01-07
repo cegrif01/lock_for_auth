@@ -71,8 +71,9 @@ return [
              //Allow a user to create tasks
              $manager->role('user')->allow('create', 'tasks');
 
+
              //allow a user to read only their specific roles
-             $manager->role('user')->allow('read', 'tasks', $caller->getCaller()->getCallerId());
+             //$manager->role('user')->allow('read', 'tasks', $caller->getCaller()->getCallerId());
 
              // Allow an editor to publish tasks.
              $manager->role('editor')->allow('publish', 'tasks');

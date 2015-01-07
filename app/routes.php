@@ -19,16 +19,15 @@ Route::get('logout','SessionsController@destroy');
 
 Route::get('/users', function() {
 
-    $user = Auth::user();
+    with(new \LockDemo\TaskAuthManager(App::make('lock.manager'), App::make('lock')))->setPermissions();
 
-    pp(Lock::can('read', 'tasks', $user->getCallerId()));
-
-    return pp(User::all());
+    pp(Auth::user()->can('read', 'tasks', 4));
 });
 
 Route::get('/tasks', function() {
 
-    return pp(Task::all());
+    pp(Task::all());
+
 });
 
 //});

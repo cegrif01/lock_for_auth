@@ -5,6 +5,11 @@ use BeatSwitch\Lock\Callers\Caller;
 class Task extends Eloquent implements Caller
 {
 
+    public function user()
+    {
+        return $this->belongsTo('User');
+    }
+
     /**
      * The database table used by the model.
      *

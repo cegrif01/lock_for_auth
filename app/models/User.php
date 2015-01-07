@@ -25,6 +25,11 @@ class User extends Eloquent implements UserInterface, RemindableInterface, Calle
 	 */
 	protected $hidden = array('password', 'remember_token');
 
+    public function tasks()
+    {
+        return $this->hasMany('Task');
+    }
+
     public function getCallerType()
     {
         return 'users';
