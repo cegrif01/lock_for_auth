@@ -20,6 +20,9 @@ Route::get('/users', function() {
     return User::all();
 });
 
+//by default, the user shouldn't be able to view anything.  We must go to
+// /user-management first to set permissions in the database.  Once they
+//are in the db, then we can view our tasks if we are allowed.
 Route::get('/tasks/{task_id}', function($task_id) {
 
     if( ! Auth::user()->can('read', 'tasks', (int) $task_id)) {
@@ -30,8 +33,10 @@ Route::get('/tasks/{task_id}', function($task_id) {
     return Task::find($task_id);
 });
 
+//set permissions here.  Because we are using the database driver, calling this method
+//will set those permissions in the database.  Then they are referenced everywhere in
+//code base.
 Route::get('user-management', function()
 {
-
     with(new \LockDemo\AuthManager(App::make('lock.manager'), App::make('lock')))->setPermissions();
 });
