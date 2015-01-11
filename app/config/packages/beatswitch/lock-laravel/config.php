@@ -31,16 +31,4 @@ return [
 
     'user_caller_type' => 'users',
 
-    /*
-    |--------------------------------------------------------------------------
-    | Database Driver Table
-    |--------------------------------------------------------------------------
-    |
-    | If you've chosen the persistent database driver, you can choose here to
-    | which table the permissions should be stored to.
-    |
-    */
-
-    'table' => '',
-
 ];
