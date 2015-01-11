@@ -31,16 +31,21 @@ class AuthManager
 
     public function setPermissions()
     {
+        $authUser = $this->callerLock->getCaller();
+
         /** @var \Illuminate\Database\Eloquent\Collection $callersTasks */
-        $callersTasks = $this->callerLock->getCaller()->tasks()->get();
+        $callersTasks = $authUser->tasks()->get();
+
+        //$this->lockManager->setRole('standard');
+        //$this->lockManager->role('standard')->allow('standard', 'read', 'tasks');
+        //$this->lockManager->role('user')->allow('create', 'tasks');
 
         //set permissions on all the tasks that belong to this user
         foreach($callersTasks as $task) {
 
             $this->lockManager
-                 ->caller($this->callerLock->getCaller())
-                 ->allow('read', 'tasks', (int) $task->getCallerId());
+                ->caller($authUser)
+                ->allow('read', 'tasks', (int) $task->getCallerId());
         }
-
     }
 }

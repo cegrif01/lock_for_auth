@@ -42,6 +42,6 @@ class User extends Eloquent implements UserInterface, RemindableInterface, Calle
 
     public function getCallerRoles()
     {
-        return ['editor', 'publisher'];
+        return ['standard'];
     }
 }

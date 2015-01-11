@@ -38,5 +38,6 @@ Route::get('/tasks/{task_id}', function($task_id) {
 //code base.
 Route::get('user-management', function()
 {
+    //App::make('lock')
     with(new \LockDemo\AuthManager(App::make('lock.manager'), App::make('lock')))->setPermissions();
 });

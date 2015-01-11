@@ -15,6 +15,8 @@ class DatabaseSeeder extends Seeder
 		$this->call('UserTableSeeder');
 
         $this->call('TaskTableSeeder');
+
+        //$this->call('AuthSetupSeeder');
 	}
 
 }
@@ -23,7 +25,7 @@ class UserTableSeeder extends Seeder
 {
     public function run()
     {
-        User::create(['email' => 'cegrif01@gmail.com', 'password' => Hash::make('secret')]);
+        User::create(['email' => 'cegrif01@gmail.com',   'password' => Hash::make('secret')]);
         User::create(['email' => 'test_email@gmail.com', 'password' => Hash::make('secret')]);
     }
 }
