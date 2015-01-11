@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateCallerRoleTable extends Migration {
+class CreateRoleablesTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,13 +12,13 @@ class CreateCallerRoleTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('caller_role', function(Blueprint $table)
+		Schema::create('roleables', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->string('caller_type', 100);
-			$table->integer('caller_id', 11);
-			$table->integer('role_id', 11);
             $table->integer('role_id')->unsigned()->index();
+            $table->string('caller_type', 100);
+            $table->integer('caller_id')->unsigned()->index();
+
             $table->foreign('role_id')->references('id')->on('roles');
 			$table->timestamps();
 		});
@@ -32,7 +32,7 @@ class CreateCallerRoleTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('caller_role');
+		Schema::drop('roleables');
 	}
 
 }
