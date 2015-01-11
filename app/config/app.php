@@ -122,6 +122,7 @@ return array(
 		'Illuminate\View\ViewServiceProvider',
 		'Illuminate\Workbench\WorkbenchServiceProvider',
         'LockDemo\LockOverrides\CustomLockServiceProvider',
+        'Way\Generators\GeneratorsServiceProvider'
 
 	),
 
