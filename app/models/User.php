@@ -30,6 +30,16 @@ class User extends Eloquent implements UserInterface, RemindableInterface, Calle
         return $this->hasMany('Task');
     }
 
+    public function roles()
+    {
+        return $this->morphToMany('Role', 'roleable');
+    }
+
+    public function permissions()
+    {
+        return $this->morphToMany('Permission', 'permissionable');
+    }
+
     public function getCallerType()
     {
         return 'users';
@@ -42,10 +52,10 @@ class User extends Eloquent implements UserInterface, RemindableInterface, Calle
 
     /**
      * run a query to grab roles for this user.
-     * @return array
+     * @return \Illuminate\Database\Eloquent\Collection
      */
     public function getCallerRoles()
     {
-        return ['standard'];
+        return $this->roles()->get();
     }
 }

@@ -7,4 +7,9 @@ class Role extends Eloquent
     {
         return $this->morphedByMany('User', 'roleable');
     }
+
+    public function permissions()
+    {
+        return $this->belongsToMany('Permission');
+    }
 }
