@@ -41,6 +41,6 @@ return [
     |
     */
 
-    'table' => 'lock_permissions',
+    'table' => '',
 
 ];
