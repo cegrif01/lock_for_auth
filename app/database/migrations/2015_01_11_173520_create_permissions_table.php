@@ -18,7 +18,7 @@ class CreatePermissionsTable extends Migration {
 			$table->string('type', 10);
 			$table->string('action', 100);
 			$table->string('resource_type', 100)->nullable();
-			$table->int('resource_id', 11)->nullable();
+			$table->integer('resource_id', 11)->nullable();
 			$table->timestamps();
 		});
 	}
