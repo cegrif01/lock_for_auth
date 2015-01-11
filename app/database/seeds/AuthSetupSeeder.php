@@ -9,15 +9,6 @@ class AuthSetupSeeder extends Seeder
     public function run()
     {
         DB::table('lock_permissions')->insert([
-            [
-                'caller_type'  => 'users',
-                'caller_id' => 1,
-                'role' => 'chuck_norris',
-                'type' => 'privilege',
-                'action'    => 'read',
-                'resource_type' => 'tasks',
-                'resource_id'   => 1,
-            ],
 
             //$this->lockManager->caller($this->callerLock->getCaller())->allow('all');
             //$this->callerLock->getCaller() = currently logged in user in my case
