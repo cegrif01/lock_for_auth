@@ -2,6 +2,7 @@
 
 namespace LockDemo\LockOverrides;
 
+use DB;
 use BeatSwitch\Lock\Roles\Role;
 use BeatSwitch\Lock\Drivers\Driver;
 use BeatSwitch\Lock\Callers\Caller;
@@ -17,7 +18,16 @@ class LockDemoDriver implements Driver
      */
     public function getCallerPermissions(Caller $caller)
     {
+        $permissions = DB::table('permissions')
+                         ->join('permissionables', function($join) use ($caller) {
+                             $join->on('permissions.id', '=', 'permissionables.permission_id')
+                                  ->where('permissionables.caller_type', '=', $caller->getCallerType())
+                                  ->where('permissionables.caller_id', '=', $caller->getCallerId());
 
+                         })
+                         ->get(['permissions.*']);
+
+        pp($permissions);
     }
 
     /**

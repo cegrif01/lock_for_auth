@@ -2,6 +2,7 @@
 
 class Permission extends Eloquent
 {
+
 	public function roles()
     {
         return $this->belongsToMany('Role');
@@ -9,6 +10,6 @@ class Permission extends Eloquent
 
     public function users()
     {
-        return $this->morphedByMany('User', 'permissionable');
+        return $this->morphedByMany('User', 'caller', 'permissionables');
     }
 }

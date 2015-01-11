@@ -1,55 +1,57 @@
 <?php
 
-use DB;
-use LockPermission;
 use Illuminate\Database\Seeder;
 
 class AuthSetupSeeder extends Seeder
 {
     public function run()
     {
-        DB::table('lock_permissions')->insert([
+        $user = User::findOrFail(1);
 
-            //$this->lockManager->caller($this->callerLock->getCaller())->allow('all');
-            //$this->callerLock->getCaller() = currently logged in user in my case
-            //the caller_id would be 1 because that's the user I was logged in as.
-            //this is what all looks like it overrides everything.  Having this entry in here will
-            //allow user with id of 1 to do anything they damn well pleased, no matter what
-            //other lock_permissions I have in place.
-            [
-                'caller_type'       => 'users',
-                'caller_id'         => 1,
-                'role'              => '',
-                'type'              => 'privilege',
-                'action'            => 'all',
-                'resource_type'     => null,
-                'resource_id'       => null,
-            ],
-
-            //$this->lockManager->role('guest')->allow('guest', 'read');
-            //this is how to create a role called "guest" that's allowed to read everything
-            [
-                'caller_type'       => null,
-                'caller_id'         => null,
-                'role'              => 'guest',
-                'type'              => 'privilege',
-                'action'            => 'guest',
-                'resource_type'     => 'read',
-                'resource_id'       => null,
-            ],
-
-            //$this->lockManager->role('user')->allow('create', 'posts');
-            //allow user role to create posts
-            [
-                'caller_type'       => null,
-                'caller_id'         => null,
-                'role'              => 'user',
-                'type'              => 'privilege',
-                'action'            => 'create',
-                'resource_type'     => 'posts',
-                'resource_id'       => null,
-            ]
+        //for this first seeder we have an example of how to store permissions
+        //for a particular user.  We must fill out the permissions in the permissions
+        //table and then use the permissionables table to store those permissions
+        //on a user
+        $permission1 = Permission::create([
+            'id'                => 1,
+            'type'              => 'privilege',
+            'action'            => 'read',
+            'resource_type'     => 'tasks',
+            'resource_id'       => 1,
         ]);
+
+        $user->permissions()->save($permission1);
+
+        $permission2 = Permission::create([
+            'id'                => 2,
+            'type'              => 'privilege',
+            'action'            => 'read',
+            'resource_type'     => 'tasks',
+            'resource_id'       => 4,
+        ]);
+
+        $user->permissions()->save($permission2);
+
+        $user2 = User::findOrFail(2);
+        $permission3 = Permission::create([
+            'id'                => 3,
+            'type'              => 'privilege',
+            'action'            => 'read',
+            'resource_type'     => 'tasks',
+            'resource_id'       => 2,
+        ]);
+
+        $user2->permissions()->save($permission3);
+
+        $permission4 = Permission::create([
+            'id'                => 4,
+            'type'              => 'privilege',
+            'action'            => 'read',
+            'resource_type'     => 'tasks',
+            'resource_id'       => 3,
+        ]);
+        $user2->permissions()->save($permission4);
+
     }
 
 } 

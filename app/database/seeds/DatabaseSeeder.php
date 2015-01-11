@@ -16,7 +16,7 @@ class DatabaseSeeder extends Seeder
 
         $this->call('TaskTableSeeder');
 
-        //$this->call('AuthSetupSeeder');
+        $this->call('AuthSetupSeeder');
 	}
 
 }

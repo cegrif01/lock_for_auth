@@ -20,7 +20,6 @@ class CreatePermissionablesTable extends Migration {
             $table->integer('caller_id')->unsigned()->index();
 
             $table->foreign('permission_id')->references('id')->on('permissions');
-			$table->timestamps();
 		});
 	}
 

@@ -32,17 +32,17 @@ class User extends Eloquent implements UserInterface, RemindableInterface, Calle
 
     public function roles()
     {
-        return $this->morphToMany('Role', 'roleable');
+        return $this->morphToMany('Role', 'caller', 'roleables');
     }
 
     public function permissions()
     {
-        return $this->morphToMany('Permission', 'permissionable');
+        return $this->morphToMany('Permission', 'caller', 'permissionables');
     }
 
     public function getCallerType()
     {
-        return 'users';
+        return 'User';
     }
 
     public function getCallerId()

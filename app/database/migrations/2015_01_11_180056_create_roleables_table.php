@@ -20,7 +20,6 @@ class CreateRoleablesTable extends Migration {
             $table->integer('caller_id')->unsigned()->index();
 
             $table->foreign('role_id')->references('id')->on('roles');
-			$table->timestamps();
 		});
 	}
 
