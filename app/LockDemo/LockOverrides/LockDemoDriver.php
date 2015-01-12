@@ -3,6 +3,7 @@
 namespace LockDemo\LockOverrides;
 
 use DB;
+use Permission as CallerPermission;
 use BeatSwitch\Lock\Roles\Role;
 use BeatSwitch\Lock\Drivers\Driver;
 use BeatSwitch\Lock\Callers\Caller;
@@ -40,7 +41,22 @@ class LockDemoDriver implements Driver
      */
     public function storeCallerPermission(Caller $caller, Permission $permission)
     {
+        /** @var \Permission $callerPermission */
+        $callerPermission                   = new CallerPermission;
+        $callerPermission->type             = $permission->getType();
+        $callerPermission->action           = $permission->getAction();
+        $callerPermission->resource_type    = $permission->getResourceType();
+        $callerPermission->resource_id      = $permission->getResourceId();
 
+        $callerPermission->save();
+
+        //create a subsequent permissionable record
+        DB::table('permissionables')
+            ->insert([
+                'permission_id' => $callerPermission->id,
+                'caller_type'   => $caller->getCallerType(),
+                'caller_id'     => $caller->getCallerId()
+            ]);
     }
 
     /**
