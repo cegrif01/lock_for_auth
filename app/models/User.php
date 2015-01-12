@@ -52,10 +52,10 @@ class User extends Eloquent implements UserInterface, RemindableInterface, Calle
 
     /**
      * run a query to grab roles for this user.
-     * @return \Illuminate\Database\Eloquent\Collection
+     * @return array
      */
     public function getCallerRoles()
     {
-        return $this->roles()->get();
+        return $this->roles()->get()->toArray();
     }
 }

@@ -16,7 +16,11 @@ class DatabaseSeeder extends Seeder
 
         $this->call('TaskTableSeeder');
 
-        $this->call('AuthSetupSeeder');
+        $this->call('UserPermissionSeeder');
+
+        //$this->call('RoleUserSeeder');
+
+        //$this->call('PermissionRoleSeeder');
 	}
 
 }

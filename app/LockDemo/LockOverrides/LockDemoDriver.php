@@ -7,6 +7,7 @@ use BeatSwitch\Lock\Roles\Role;
 use BeatSwitch\Lock\Drivers\Driver;
 use BeatSwitch\Lock\Callers\Caller;
 use BeatSwitch\Lock\Permissions\Permission;
+use BeatSwitch\Lock\Permissions\PermissionFactory;
 
 class LockDemoDriver implements Driver
 {
@@ -27,7 +28,7 @@ class LockDemoDriver implements Driver
                          })
                          ->get(['permissions.*']);
 
-        pp($permissions);
+        return PermissionFactory::createFromData($permissions);
     }
 
     /**

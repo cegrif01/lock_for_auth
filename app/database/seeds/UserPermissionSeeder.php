@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class AuthSetupSeeder extends Seeder
+class UserPermissionSeeder extends Seeder
 {
     public function run()
     {
