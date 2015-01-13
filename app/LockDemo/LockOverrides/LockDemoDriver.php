@@ -29,7 +29,7 @@ class LockDemoDriver implements Driver
                          })
                          ->get(['permissions.*']);
 
-        return PermissionFactory::createFromData($permissions);
+        return empty($permissions) ? $permissions : PermissionFactory::createFromArray($permissions);
     }
 
     /**
@@ -64,6 +64,8 @@ class LockDemoDriver implements Driver
     }
 
     /**
+     * todo I should check for whereNull explicitly since mysql can't do where('resource_type', null)
+     *
      * Removes a permission for a caller
      *
      * @param \BeatSwitch\Lock\Callers\Caller $caller
@@ -118,10 +120,17 @@ class LockDemoDriver implements Driver
      */
     public function getRolePermissions(Role $role)
     {
+        $permissions = DB::table('permissions')
+                         ->join('permission_role', 'permissions.id', '=', 'permission_role.permission_id')
+                         ->join('roles', 'roles.id', '=', 'permission_role.role_id')
+                         ->where('roles.name', $role->getRoleName())
+                         ->get(['permissions.*']);
 
+        return empty($permissions) ? $permissions : PermissionFactory::createFromArray($permissions);
     }
 
     /**
+     * todo add logic for inherited roles
      * Stores a new permission for a role
      *
      * @param \BeatSwitch\Lock\Roles\Role $role
@@ -130,7 +139,30 @@ class LockDemoDriver implements Driver
      */
     public function storeRolePermission(Role $role, Permission $permission)
     {
+        $permissionId =
+        DB::table('permissions')
+            ->insertGetId([
+                'type'              =>  $permission->getType(),
+                'action'            =>  $permission->getAction(),
+                'resource_type'     =>  $permission->getResourceType(),
+                'resource_id'       =>  $permission->getResourceId(),
+                'created_at'        =>  Carbon::now(),
+                'updated_at'        =>  Carbon::now(),
+            ]);
 
+        $roleId =
+        DB::table('roles')
+            ->insertGetId([
+                'name'  => $role->getRoleName(),
+                'created_at'        =>  Carbon::now(),
+                'updated_at'        =>  Carbon::now(),
+            ]);
+
+        DB::table('permission_role')
+            ->insert([
+                'permission_id'     => $permissionId,
+                'role_id'           => $roleId
+            ]);
     }
 
     /**
@@ -142,7 +174,25 @@ class LockDemoDriver implements Driver
      */
     public function removeRolePermission(Role $role, Permission $permission)
     {
+        $dbPermission =
+            (array) DB::table('permissions')
+                ->where('type',             $permission->getType())
+                ->where('action',           $permission->getAction())
+                ->where('resource_type',    $permission->getResourceType())
+                ->where('resource_id',      $permission->getResourceId())
+                ->first(['id']);
 
+        DB::table('permissions')
+            ->where('id', $dbPermission['id'])
+            ->delete();
+
+        DB::table('permissionables')
+            ->where('permission_id', $dbPermission['id'])
+            ->delete();
+
+        DB::table('permission_role')
+          ->where('permission_id', $dbPermission['id'])
+          ->delete();
     }
 
     /**
@@ -154,6 +204,15 @@ class LockDemoDriver implements Driver
      */
     public function hasRolePermission(Role $role, Permission $permission)
     {
+        return (bool) DB::table('permissions')
+                        ->join('permission_role', 'permissions.id', '=', 'permission_role.permission_id')
+                        ->join('roles', 'roles.id', '=', 'permission_role.role_id')
+                        ->where('roles.name',                   $role->getRoleName())
+                        ->where('permissions.type',             $permission->getType())
+                        ->where('permissions.action',           $permission->getAction())
+                        ->where('permissions.resource_type',    $permission->getResourceType())
+                        ->where('permissions.resource_id',      $permission->getResourceId())
+                        ->first();
 
     }
 
