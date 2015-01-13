@@ -29,7 +29,7 @@ class LockDemoDriver implements Driver
                          })
                          ->get(['permissions.*']);
 
-        return empty($permissions) ? $permissions : PermissionFactory::createFromArray($permissions);
+        return empty($permissions) ? $permissions : PermissionFactory::createFromData($permissions);
     }
 
     /**
@@ -126,7 +126,7 @@ class LockDemoDriver implements Driver
                          ->where('roles.name', $role->getRoleName())
                          ->get(['permissions.*']);
 
-        return empty($permissions) ? $permissions : PermissionFactory::createFromArray($permissions);
+        return empty($permissions) ? $permissions : PermissionFactory::createFromData($permissions);
     }
 
     /**
@@ -153,7 +153,7 @@ class LockDemoDriver implements Driver
         $roleId =
         DB::table('roles')
             ->insertGetId([
-                'name'  => $role->getRoleName(),
+                'name'              => $role->getRoleName(),
                 'created_at'        =>  Carbon::now(),
                 'updated_at'        =>  Carbon::now(),
             ]);
@@ -184,6 +184,10 @@ class LockDemoDriver implements Driver
 
         DB::table('permissions')
             ->where('id', $dbPermission['id'])
+            ->delete();
+
+        DB::table('roles')
+            ->where('name', $role->getRoleName())
             ->delete();
 
         DB::table('permissionables')
