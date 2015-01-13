@@ -45,9 +45,7 @@ class AuthManager
 
             $this->lockManager
                 ->caller($authUser)
-                ->deny('read', 'tasks', (int) $task->getCallerId());
-
-
+                ->allow('read', 'tasks', (int) $task->getCallerId());
         }
     }
 }

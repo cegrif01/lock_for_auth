@@ -42,6 +42,7 @@ class LockDemoDriver implements Driver
      */
     public function storeCallerPermission(Caller $caller, Permission $permission)
     {
+
         $callerPermissionId =
             DB::table('permissions')
             ->insertGetId([
@@ -91,7 +92,8 @@ class LockDemoDriver implements Driver
     }
 
     /**
-     * Checks if a permission is stored for a caller
+     * Checks if a permission is stored for a caller.  This method is used
+     * so we don't duplicate data on storeCallerPermission method
      *
      * @param \BeatSwitch\Lock\Callers\Caller $caller
      * @param \BeatSwitch\Lock\Permissions\Permission
@@ -99,7 +101,13 @@ class LockDemoDriver implements Driver
      */
     public function hasCallerPermission(Caller $caller, Permission $permission)
     {
-
+        return
+        (bool) DB::table('permissions')
+                 ->where('type',             $permission->getType())
+                 ->where('action',           $permission->getAction())
+                 ->where('resource_type',    $permission->getResourceType())
+                 ->where('resource_id',      $permission->getResourceId())
+                 ->first();
     }
 
     /**
