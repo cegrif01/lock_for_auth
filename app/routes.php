@@ -25,7 +25,14 @@ Route::get('/users', function() {
 //are in the db, then we can view our tasks if we are allowed.
 Route::get('/tasks/{task_id}', function($task_id) {
 
-    if( ! Auth::user()->can('read', 'tasks', (int) $task_id)) {
+    $user = Auth::user();
+
+    if( $user->cannot('readAll', 'tasks') &&
+        $user->cannot('readOwn', 'tasks', function() use ($task_id, $user) {
+
+            return in_array($task_id, $user->tasks()->get()->fetch('id')->toArray());
+
+        })) {
 
         throw new Exception('You do not have permission to view this');
     }
