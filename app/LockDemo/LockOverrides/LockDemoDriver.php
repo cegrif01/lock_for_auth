@@ -182,21 +182,24 @@ class LockDemoDriver implements Driver
                 ->where('resource_id',      $permission->getResourceId())
                 ->first(['id']);
 
-        DB::table('permissions')
-            ->where('id', $dbPermission['id'])
-            ->delete();
-
         DB::table('roles')
-            ->where('name', $role->getRoleName())
-            ->delete();
-
-        DB::table('permissionables')
-            ->where('permission_id', $dbPermission['id'])
-            ->delete();
-
-        DB::table('permission_role')
-          ->where('permission_id', $dbPermission['id'])
+          ->where('name', $role->getRoleName())
           ->delete();
+
+        if( ! empty($dbPermission)) {
+
+            DB::table('permissions')
+                ->where('id', $dbPermission['id'])
+                ->delete();
+
+            DB::table('permissionables')
+                ->where('permission_id', $dbPermission['id'])
+                ->delete();
+
+            DB::table('permission_role')
+                ->where('permission_id', $dbPermission['id'])
+                ->delete();
+        }
     }
 
     /**
@@ -208,16 +211,17 @@ class LockDemoDriver implements Driver
      */
     public function hasRolePermission(Role $role, Permission $permission)
     {
-        return (bool) DB::table('permissions')
-                        ->join('permission_role', 'permissions.id', '=', 'permission_role.permission_id')
-                        ->join('roles', 'roles.id', '=', 'permission_role.role_id')
-                        ->where('roles.name',                   $role->getRoleName())
-                        ->where('permissions.type',             $permission->getType())
-                        ->where('permissions.action',           $permission->getAction())
-                        ->where('permissions.resource_type',    $permission->getResourceType())
-                        ->where('permissions.resource_id',      $permission->getResourceId())
-                        ->first();
+        $permissionForRole = (bool) DB::table('permissions')
+                                        ->join('permission_role', 'permissions.id', '=', 'permission_role.permission_id')
+                                        ->join('roles', 'roles.id', '=', 'permission_role.role_id')
+                                        ->where('roles.name',                   $role->getRoleName())
+                                        ->where('permissions.type',             $permission->getType())
+                                        ->where('permissions.action',           $permission->getAction())
+                                        ->where('permissions.resource_type',    $permission->getResourceType())
+                                        ->where('permissions.resource_id',      $permission->getResourceId())
+                                        ->first();
 
+        return $permissionForRole;
     }
 
 } 
