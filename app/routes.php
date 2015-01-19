@@ -28,11 +28,9 @@ Route::get('/tasks/{task_id}', function($task_id) {
     $user = Auth::user();
 
     if( $user->cannot('readAll', 'tasks') &&
-        $user->cannot('readOwn', 'tasks', function() use ($task_id, $user) {
-
-            return in_array($task_id, $user->tasks()->get()->fetch('id')->toArray());
-
-        })) {
+        //maybe I shouldn't use a closure here.  It would be a better idea if we could
+        //just add the user permission to a particular resource when we add that resource.
+        $user->cannot('readOwn', 'tasks', 1)) {
 
         throw new Exception('You do not have permission to view this');
     }
