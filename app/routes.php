@@ -15,21 +15,17 @@ Route::post('auth', ['as' => 'auth', 'uses' => 'SessionsController@loginPost']);
 
 Route::get('logout','SessionsController@destroy');
 
-Route::group(['before' => 'apply_lock'], function () {
+Route::get('/users', function() {
 
-    Route::get('/users', function() {
+    return User::all();
+});
 
-        return User::all();
-    });
+Route::get('/tasks/{task_id}', function($task_id) {
 
-    Route::get('/tasks/{task_id}', function($task_id) {
+    if( ! Auth::user()->can('read', 'tasks', (int)$task_id)) {
 
-        if( ! Auth::user()->can('read', 'tasks', (int)$task_id)) {
+        throw new Exception('You do not have permission to view this');
+    }
 
-            throw new Exception('You do not have permission to view this');
-        }
-
-        return Task::find($task_id);
-    });
-
+    return Task::find($task_id);
 });

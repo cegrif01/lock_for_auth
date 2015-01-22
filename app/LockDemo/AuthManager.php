@@ -16,14 +16,16 @@ class AuthManager
 
     public function setPermissions()
     {
-        /** @var \BeatSwitch\Lock\Callers\Caller $callersTasks */
-        $callersTasks = $this->callerLock->getCaller()->tasks()->get();
-
-        //set permissions on all the tasks that belong to this user
-        foreach($callersTasks as $task) {
-
-            $this->lockManager->caller($this->callerLock->getCaller())->allow('read', 'tasks', (int) $task->getCallerId());
-        }
+//        /** @var \BeatSwitch\Lock\Callers\Caller $callersTasks */
+//        $callersTasks = $this->callerLock->getCaller()->tasks()->get();
+//
+//        //set permissions on all the tasks that belong to this user
+//        foreach($callersTasks as $task) {
+//
+//            $this->lockManager
+//                ->caller($this->callerLock->getCaller())
+//                ->allow('read', 'tasks', (int) $task->getCallerId());
+//        }
 
     }
 }
