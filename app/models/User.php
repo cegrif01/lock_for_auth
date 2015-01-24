@@ -11,18 +11,8 @@ class User extends Eloquent implements UserInterface, RemindableInterface, Calle
 {
     use UserTrait, RemindableTrait, LockAware;
 
-	/**
-	 * The database table used by the model.
-	 *
-	 * @var string
-	 */
 	protected $table = 'users';
 
-	/**
-	 * The attributes excluded from the model's JSON form.
-	 *
-	 * @var array
-	 */
 	protected $hidden = array('password', 'remember_token');
 
     public function tasks()
@@ -50,10 +40,6 @@ class User extends Eloquent implements UserInterface, RemindableInterface, Calle
         return $this->id;
     }
 
-    /**
-     * run a query to grab roles for this user.
-     * @return array
-     */
     public function getCallerRoles()
     {
         return $this->roles()->get()->fetch('name')->toArray();

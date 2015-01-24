@@ -23,5 +23,4 @@ class UserRolePermissionSeeder extends Seeder
         $user2->roles()->save($role2);
         $user2->permissions()->save(Permission::find(2));
     }
-
 }

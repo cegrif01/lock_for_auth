@@ -5,11 +5,6 @@ use Illuminate\Database\Schema\Blueprint;
 
 class CreatePermissionablesTable extends Migration {
 
-	/**
-	 * Run the migrations.
-	 *
-	 * @return void
-	 */
 	public function up()
 	{
 		Schema::create('permissionables', function(Blueprint $table)
@@ -23,15 +18,8 @@ class CreatePermissionablesTable extends Migration {
 		});
 	}
 
-
-	/**
-	 * Reverse the migrations.
-	 *
-	 * @return void
-	 */
 	public function down()
 	{
 		Schema::drop('permissionables');
 	}
-
 }

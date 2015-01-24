@@ -123,7 +123,6 @@ return array(
 		'Illuminate\Workbench\WorkbenchServiceProvider',
         'LockDemo\LockOverrides\CustomLockServiceProvider',
         'Way\Generators\GeneratorsServiceProvider'
-
 	),
 
 	/*

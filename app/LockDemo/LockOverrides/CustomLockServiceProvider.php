@@ -6,9 +6,6 @@ use BeatSwitch\Lock\Integrations\Laravel\LockServiceProvider;
 
 class CustomLockServiceProvider extends LockServiceProvider
 {
-    /**
-     * @inheritDoc
-     */
     protected function getDriver()
     {
         // Get the configuration options for Lock.
@@ -24,5 +21,4 @@ class CustomLockServiceProvider extends LockServiceProvider
         // Otherwise bootstrap the static array driver.
         return new ArrayDriver();
     }
-
-} 
+}
