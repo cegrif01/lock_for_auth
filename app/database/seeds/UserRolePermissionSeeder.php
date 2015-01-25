@@ -7,21 +7,23 @@ class UserRolePermissionSeeder extends Seeder
     public function run()
     {
         //set up user 1
-        $user1 = User::findOrFail(1);
-        App::make('lock.manager')
-            ->role('admin')
-            ->allow('readAll', 'tasks');
+        $saturdayWorker = User::findOrFail(1);
 
-        $role1 = Role::where('name', '=', 'admin')->first();
-        $user1->roles()->save($role1);
+        App::make('lock.manager')
+           ->role('saturday_tps_report_specialist')
+           ->allow('workOnSaturday', 'tps_report_generator');
+
+        $saturdayTpsReportSpecialistRole = Role::where('name', '=', 'saturday_tps_report_specialist')->first();
+        $saturdayWorker->roles()->save($saturdayTpsReportSpecialistRole);
 
         //set up user 2
-        $user2 = User::findOrFail(2);
-        foreach($user2->tasks()->get() as $task) {
+        $sundayWorker = User::findOrFail(2);
 
-            App::make('lock.manager')
-                ->caller($user2)
-                ->allow('readOwn', 'tasks', $task->id);
-        }
+        App::make('lock.manager')
+           ->role('sunday_tps_report_specialist')
+           ->allow('workOnSunday', 'tps_report_generator');
+
+        $sundayTpsReportSpecialistRole = Role::where('name', '=', 'sunday_tps_report_specialist')->first();
+        $sundayWorker->roles()->save($sundayTpsReportSpecialistRole);
     }
 }

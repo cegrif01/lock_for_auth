@@ -1,5 +1,7 @@
 <?php
 
+use LockDemo\TpsReportGenerator;
+
 Route::get('/', function()
 {
 	return Redirect::to('/login');
@@ -31,4 +33,12 @@ Route::get('/tasks/{taskId}', function($taskId) {
     }
 
     return Task::find($taskId);
+});
+
+Route::get('generate-tps-report', function() {
+
+    $user = Auth::user();
+
+    return (new TpsReportGenerator($user))->workOnSaturday();
+    //return (new TpsReportGenerator($user))->workOnSunday();
 });

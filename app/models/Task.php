@@ -29,6 +29,6 @@ class Task extends Eloquent implements Caller
 
     public function getCallerRoles()
     {
-        return ['editor', 'publisher'];
+        return [];
     }
 }

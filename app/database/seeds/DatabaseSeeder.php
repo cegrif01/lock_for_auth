@@ -14,15 +14,8 @@ class DatabaseSeeder extends Seeder
 
 		$this->call('UserTableSeeder');
 
-        $this->call('TaskTableSeeder');
-
-        //$this->call('UserPermissionSeeder');
-
         $this->call('UserRolePermissionSeeder');
-
-        //$this->call('PermissionRoleSeeder');
 	}
-
 }
 
 class UserTableSeeder extends Seeder
@@ -34,13 +27,3 @@ class UserTableSeeder extends Seeder
     }
 }
 
-class TaskTableSeeder extends Seeder
-{
-    public function run()
-    {
-        Task::create(['user_id' => 1, 'body' => 'sweep the floor']);
-        Task::create(['user_id' => 2, 'body' => 'feed the dog']);
-        Task::create(['user_id' => 2, 'body' => 'buy wife flowers']);
-        Task::create(['user_id' => 1, 'body' => 'groom the dog']);
-    }
-}

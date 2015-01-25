@@ -6,42 +6,24 @@ class UserPermissionSeeder extends Seeder
 {
     public function run()
     {
-        $user = User::findOrFail(1);
-        $permission1 = Permission::create([
-            'id'                => 1,
-            'type'              => 'privilege',
-            'action'            => 'read',
-            'resource_type'     => 'tasks',
-            'resource_id'       => 1,
-        ]);
-        $user->permissions()->save($permission1);
+        $saturdayWorker = User::findOrFail(1);
 
-        $permission2 = Permission::create([
-            'id'                => 2,
+        $saturdayPermission = Permission::create([
             'type'              => 'privilege',
-            'action'            => 'read',
-            'resource_type'     => 'tasks',
-            'resource_id'       => 4,
+            'action'            => 'workOnSaturday',
+            'resource_type'     => 'tps_report_generator',
+            'resource_id'       => null,
         ]);
-        $user->permissions()->save($permission2);
+        $saturdayWorker->permissions()->save($saturdayPermission);
 
-        $user2 = User::findOrFail(2);
-        $permission3 = Permission::create([
-            'id'                => 3,
-            'type'              => 'privilege',
-            'action'            => 'read',
-            'resource_type'     => 'tasks',
-            'resource_id'       => 2,
-        ]);
-        $user2->permissions()->save($permission3);
+        $sundayWorker = User::findOrFail(2);
 
-        $permission4 = Permission::create([
-            'id'                => 4,
+        $sundayPermission = Permission::create([
             'type'              => 'privilege',
-            'action'            => 'read',
-            'resource_type'     => 'tasks',
-            'resource_id'       => 3,
+            'action'            => 'workOnSunday',
+            'resource_type'     => 'tps_report_generator',
+            'resource_id'       => null,
         ]);
-        $user2->permissions()->save($permission4);
+        $sundayWorker->permissions()->save($sundayPermission);
     }
-} 
+}
