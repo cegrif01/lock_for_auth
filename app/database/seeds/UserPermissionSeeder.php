@@ -44,5 +44,4 @@ class UserPermissionSeeder extends Seeder
         ]);
         $user2->permissions()->save($permission4);
     }
-
 } 

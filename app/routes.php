@@ -20,29 +20,15 @@ Route::get('/users', function() {
     return User::all();
 });
 
-//by default, the user shouldn't be able to view anything.  We must go to
-// /user-management first to set permissions in the database.  Once they
-//are in the db, then we can view our tasks if we are allowed.
-Route::get('/tasks/{task_id}', function($task_id) {
+Route::get('/tasks/{taskId}', function($taskId) {
 
     $user = Auth::user();
 
     if( $user->cannot('readAll', 'tasks') &&
-        //maybe I shouldn't use a closure here.  It would be a better idea if we could
-        //just add the user permission to a particular resource when we add that resource.
-        $user->cannot('readOwn', 'tasks', 1)) {
+        $user->cannot('readOwn', 'tasks', (int) $taskId)) {
 
         throw new Exception('You do not have permission to view this');
     }
 
-    return Task::find($task_id);
-});
-
-//set permissions here.  Because we are using the database driver, calling this method
-//will set those permissions in the database.  Then they are referenced everywhere in
-//code base.
-Route::get('user-management', function()
-{
-    //App::make('lock')
-    with(new \LockDemo\AuthManager(App::make('lock.manager'), App::make('lock')))->setPermissions();
+    return Task::find($taskId);
 });
