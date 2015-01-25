@@ -40,5 +40,5 @@ Route::get('generate-tps-report', function() {
     $user = Auth::user();
 
     return (new TpsReportGenerator($user))->workOnSaturday();
-    //return (new TpsReportGenerator($user))->workOnSunday();
+    return (new TpsReportGenerator($user))->workOnSunday();
 });
