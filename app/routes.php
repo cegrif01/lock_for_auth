@@ -36,9 +36,18 @@ Route::get('/tasks/{taskId}', function($taskId) {
 });
 
 Route::get('generate-tps-report', function() {
-
+    //user 1 is only allowed to work on Sunday
+    //user 2 is only allowed to work on Saturday
     $user = Auth::user();
 
-    return (new TpsReportGenerator($user))->workOnSaturday();
-    return (new TpsReportGenerator($user))->workOnSunday();
+    try {
+
+        echo (new TpsReportGenerator($user))->workOnSaturday();
+        echo (new TpsReportGenerator($user))->workOnSunday();
+
+    } catch(Exception $e) {
+
+        echo $e->getMessage();
+    }
 });
+
